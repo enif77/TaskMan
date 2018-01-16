@@ -1,4 +1,4 @@
-﻿/* TaskMan 1.0 - (C) 2017 Premysl Fara 
+﻿/* TaskMan 1.0 - (C) 2017 - 2018 Premysl Fara 
  
 TaskMan 1.0 and newer are available under the zlib license:
 This software is provided 'as-is', without any express or implied
@@ -55,9 +55,14 @@ namespace TaskMan.Tasks
             {
                 // Long time ago, so schedule it for now.
                 LatstExecutionTime = now.AddMinutes(-MinutesBetweenRuns);
+
+                // If the RunAt is set to something in the future, use it.
+                if (LatstExecutionTime < RunAt)
+                {
+                    LatstExecutionTime = RunAt.AddMinutes(-MinutesBetweenRuns);
+                }
             }
 
-            // We will be executed about now.
             var atTime = LatstExecutionTime.AddMinutes(MinutesBetweenRuns);
 
             // We missed the time, lets do it later.

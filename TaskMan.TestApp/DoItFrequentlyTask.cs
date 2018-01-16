@@ -17,35 +17,51 @@ freely, subject to the following restrictions:
  
  */
 
-namespace TaskMan.Tasks
+namespace TaskMan.TestApp
 {
     using System;
+    using System.Threading;
+
+    using TaskMan.Tasks;
 
 
     /// <summary>
-    /// A base for tasks, that run once per day.
+    /// A frequently running task.
     /// </summary>
-    public abstract class ADailyTask : ABaseTask
+    public class DoItFrequentlyTask : ARunFrequentlyTask
     {
         /// <summary>
-        /// Calculates the NextRunAt based on the DateTime.Now property.
+        /// A name of this task.
         /// </summary>
-        /// <param name="isFirstRun">If true, this task will run for the first time. (Is being scheduled.)</param>
-        /// <returns>True, if a new run time was calculated.</returns> 
-        public override bool UpdateNextRunAt(bool isFirstRun)
+        public string Name { get; set; }
+
+        /// <summary>
+        /// For how long this task should be "working" in seconds.
+        /// </summary>
+        public int SleepSeconds { get; set; }
+
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="minutesBetweenRuns">How many minutes should be between two runs of this task.</param>
+        public DoItFrequentlyTask(int minutesBetweenRuns)
+            : base(minutesBetweenRuns)
         {
-            var now = DateTime.Now;
-            var atTime = new DateTime(now.Year, now.Month, now.Day, RunAt.Hour, RunAt.Minute, RunAt.Second);
+            Name = string.Empty;
+            SleepSeconds = 5;
+        }
 
-            // We missed the time, lets do it tomorrow.
-            while (now > atTime)
-            {
-                atTime = atTime.AddDays(1);
-            }
 
-            NextRunAt = atTime;
+        public override TaskFinishedCode Action()
+        {
+            Console.WriteLine("{0}: I am working for {1} seconds...", Name, SleepSeconds);
 
-            return true;
+            Thread.Sleep(SleepSeconds * 1000);
+
+            Console.WriteLine("{0}: I am finished.", Name);
+
+            return TaskFinishedCode.Ok;
         }
     }
 }

@@ -4,16 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DAF77A2C-D767-40FF-BEEB-610F7B523D6C}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TaskMan</RootNamespace>
-    <AssemblyName>TaskMan</AssemblyName>
+    <ProjectGuid>{4F77830D-62B4-44BC-9375-5454B693A962}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>TaskMan.TestApp</RootNamespace>
+    <AssemblyName>TaskMan.TestApp</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -41,14 +42,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DoItFrequentlyTask.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TaskScheduler.cs" />
-    <Compile Include="Tasks\ABaseTask.cs" />
-    <Compile Include="Tasks\ADailyTask.cs" />
-    <Compile Include="Tasks\AHourlyTask.cs" />
-    <Compile Include="Tasks\ARunFrequentlyTask.cs" />
-    <Compile Include="Tasks\ARunOnceTask.cs" />
-    <Compile Include="Tasks\ITask.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TaskMan\TaskMan.csproj">
+      <Project>{daf77a2c-d767-40ff-beeb-610f7b523d6c}</Project>
+      <Name>TaskMan</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

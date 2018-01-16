@@ -1,4 +1,4 @@
-﻿/* TaskMan 1.0 - (C) 2017 Premysl Fara 
+﻿/* TaskMan 1.0 - (C) 2017 - 2018 Premysl Fara 
  
 TaskMan 1.0 and newer are available under the zlib license:
 This software is provided 'as-is', without any express or implied
@@ -162,15 +162,12 @@ namespace TaskMan
         /// </summary>
         public void Update()
         {
-            lock (_lock)
+            if (_updating)
             {
-                if (_updating)
-                {
-                    return;
-                }
-
-                _updating = true;
+                return;
             }
+
+            _updating = true;
 
             try
             {
@@ -313,7 +310,7 @@ namespace TaskMan
                 task.LatstExecutionTime = DateTime.Now;
 
                 // Hey task, do something!
-                result = await ExecuteTaskAsync(cancellationToken, task);
+                result = await Task.Factory.StartNew(task.Action, cancellationToken);
             }
             catch (OperationCanceledException)
             {
@@ -345,12 +342,6 @@ namespace TaskMan
             }
 
             return result;
-        }
-
-
-        private async Task<TaskFinishedCode> ExecuteTaskAsync(CancellationToken cancellationToken, ITask task)
-        {
-            return task.Action();
         }
 
 
