@@ -285,7 +285,7 @@ namespace TaskMan
             // A new run requested.
             if (_scheduledTasks.ContainsKey(task.NextRunAt))
             {
-                NotifyTaskNotScheduled("Can not schedule a new task at " + task.NextRunAt, task);
+                NotifyTaskNotScheduled("Can not schedule a new task at " + task.NextRunAt + ". A different task is scheduled for this time.", task);
 
                 return false;
             }
