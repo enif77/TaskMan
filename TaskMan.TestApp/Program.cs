@@ -1,12 +1,15 @@
-﻿/* TaskMan 1.0 - (C) 2017 - 2018 Premysl Fara 
+﻿/* TaskMan - (C) 2017 - 2019 Premysl Fara 
  
-TaskMan 1.0 and newer are available under the zlib license:
+TaskMan is available under the zlib license:
+
 This software is provided 'as-is', without any express or implied
 warranty.  In no event will the authors be held liable for any damages
 arising from the use of this software.
+
 Permission is granted to anyone to use this software for any purpose,
 including commercial applications, and to alter it and redistribute it
 freely, subject to the following restrictions:
+
 1. The origin of this software must not be misrepresented; you must not
    claim that you wrote the original software. If you use this software
    in a product, an acknowledgment in the product documentation would be
@@ -30,12 +33,14 @@ namespace TaskMan.TestApp
         static void Main(string[] args)
         {
             var app = new Program();
-
+            
             app._taskScheduler.TaskExecutionStarted += app._taskScheduler_TaskExecutionStarted;
             app._taskScheduler.TaskExecutionFinished += app._taskScheduler_TaskExecutionFinished;
             app._taskScheduler.TaskNotExecuted += app._taskScheduler_TaskNotExecuted;
             app._taskScheduler.TaskScheduled += app._taskScheduler_TaskScheduled;
             app._taskScheduler.TaskNotScheduled += app._taskScheduler_TaskNotScheduled;
+
+            app._taskScheduler.Init();
 
             app.ScheduleFrequentTask(DateTime.Now.Add(TimeSpan.FromMinutes(1)), "First", 60 * 5, 10);
             app.ScheduleFrequentTask(DateTime.Now.Add(TimeSpan.FromMinutes(2)), "Second", 60 * 1, 10);
